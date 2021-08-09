@@ -9,9 +9,9 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
     setPricingUnit(product, price){
         if (product === undefined) throw new Error
         if (parseFloat(price, 1.00)) {
-            var p = new String(product)
-            p.toUpperCase()
-            this.unitPrices[p] = price
+            var p = new String(product);
+            p.toUpperCase();
+            this.unitPrices[p] = price;
         } else {
             throw new Error
         }
@@ -19,35 +19,35 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
     }
 
     #getPricingUnit(product){
-        return this.unitPrices[product]
+        return this.unitPrices[product];
     }
 
     setPricingVolume(product, volume, price){
-        if (product === undefined) throw new Error
-        if (this.#getPricingUnit(product) === undefined) throw Error
+        if (product === undefined) throw new Error;
+        if (this.#getPricingUnit(product) === undefined) throw Error;
         if (parseFloat(price, 1.00) && parseFloat(volume, 1.00)) {
-            product.toUpperCase()
+            product.toUpperCase();
             this.volumePrices[product] = {
                 volume,
                 price
-            }
+            };
         } else {
-            throw new Error
+            throw new Error;
         }
     }
 
     #getPricingVolume(product) {
-        return this.volumePrices[product].price
+        return this.volumePrices[product].price;
     }
 
     #getVolumeForDiscount(product){
-        return this.volumePrices[product].volume
+        return this.volumePrices[product].volume;
     }
 
     scanProduct(product) {
-        if (product === undefined) throw new Error
-        product.toUpperCase()
-        if (this.#getPricingUnit(product) === undefined) throw new Error
+        if (product === undefined) throw new Error;
+        product.toUpperCase();
+        if (this.#getPricingUnit(product) === undefined) throw new Error;
         if(this.scannedItems[product]){
             this.scannedItems[product]++ 
         } else {
@@ -70,16 +70,16 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
                 for(let i = 1; i < productCount+1; i++) {
                     //Is there enough volume to get a discount once... twice... etc...
                     if (productCount-(volumeForDiscount*i)>=0){
-                        discountCount = discountCount+1
+                        discountCount = discountCount+1;
                     }
                 }
-                const discountedCost = discountCount*volumePricing
-                const remainderCost = (productCount-discountCount*volumeForDiscount)*unitPricing
-                totalPrice += discountedCost + remainderCost
+                const discountedCost = discountCount*volumePricing;
+                const remainderCost = (productCount-discountCount*volumeForDiscount)*unitPricing;
+                totalPrice += discountedCost + remainderCost;
             } else {
-                totalPrice += productCount * unitPricing
+                totalPrice += productCount * unitPricing;
             }
         }
-        return totalPrice
+        return totalPrice;
     }
 }
