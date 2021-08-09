@@ -59,12 +59,13 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
         let totalPrice = 0.00;
         for(const product in this.scannedItems){
             const productCount = this.scannedItems[product]
-
+            const unitPricing = this.#getPricingUnit(product)
             if(this.volumePrices[product]){
                 //Yes this product has volumne sales
 
                 let discountCount = 0.00;
                 const volumeForDiscount = this.#getVolumeForDiscount(product)
+                const volumePricing = this.#getPricingVolume(product)
 
                 for(let i = 1; i < productCount+1; i++) {
                     //Is there enough volume to get a discount once... twice... etc...
@@ -72,11 +73,11 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
                         discountCount = discountCount+1
                     }
                 }
-                let discountedCost = discountCount*this.#getPricingVolume(product)
-                let remainderCost = (productCount-discountCount*volumeForDiscount)*this.#getPricingUnit(product)
+                const discountedCost = discountCount*volumePricing
+                const remainderCost = (productCount-discountCount*volumeForDiscount)*unitPricing
                 totalPrice += discountedCost + remainderCost
             } else {
-                totalPrice += productCount * this.#getPricingUnit(product)
+                totalPrice += productCount * unitPricing
             }
         }
         return totalPrice
