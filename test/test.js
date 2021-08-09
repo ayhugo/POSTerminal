@@ -93,3 +93,40 @@ it('Scan a lot of C iems. without crashing', function () {
     }).not.to.throw();
 })
 
+
+it('setPricingUnit for a string "a". should error', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    expect(() => {
+        t.setPricingUnit("C", "a");
+    }).to.throw();
+})
+
+it('setPricingUnit for a string "1". should not error', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    expect(() => {
+        t.setPricingUnit("C", "1");
+    }).not.to.throw();
+})
+
+it('setPricingVolume for a price="a" and volume=1. should error', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    expect(() => {
+        t.setPricingUnit("C", "1");
+        t.setPricingVolume("C", "a", 1)
+    }).to.throw();
+})
+
+it('setPricingVolume for a price="a" and volume="a". should error', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    expect(() => {
+        t.setPricingUnit("C", "1");
+        t.setPricingVolume("C", "a", "a")
+    }).to.throw();
+})
+
+it('setPricingVolume for product that does not have a pricingunit. should error', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    expect(() => {
+        t.setPricingVolume("C", 3, 1)
+    }).to.throw();
+})

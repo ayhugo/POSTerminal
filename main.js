@@ -7,8 +7,16 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
     }
 
     setPricingUnit(product, price){
-        product.toUpperCase()
-        this.unitPrices[product] = price
+        if (product === undefined) throw new Error
+        if (parseFloat(price, 1.00)) {
+            var p = new String(product)
+            p.toUpperCase()
+            this.unitPrices[p] = price
+        } else {
+            throw new Error
+        }
+        //if (Number.isInteger(price) == false) throw new Error
+
     }
 
     #getPricingUnit(product){
@@ -16,10 +24,16 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
     }
 
     setPricingVolume(product, volume, price){
-        product.toUpperCase()
-        this.volumePrices[product] = {
-            volume,
-            price
+        if (product === undefined) throw new Error
+        if (this.#getPricingUnit(product) === undefined) throw Error
+        if (parseFloat(price, 1.00) && parseFloat(volume, 1.00)) {
+            product.toUpperCase()
+            this.volumePrices[product] = {
+                volume,
+                price
+            }
+        } else {
+            throw new Error
         }
     }
 
