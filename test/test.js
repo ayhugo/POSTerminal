@@ -62,14 +62,14 @@ it('Scan items ABCD. total = 7.25', function () {
 
 
 
-it('Scan item that doesnt exist. throw error', function () {
+it('Scan item that doesnt exist. should error', function () {
     var t = new Terminal.PointOfSaleTerminal;
     expect(() => {
         t.scanProduct("A");
     }).to.throw();
 })
 
-it('scanProduct() empty. throw error', function () {
+it('scanProduct() empty. should error', function () {
     var t = new Terminal.PointOfSaleTerminal;
     expect(() => {
         t.scanProduct();
