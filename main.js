@@ -15,7 +15,6 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
         } else {
             throw new Error
         }
-        //if (Number.isInteger(price) == false) throw new Error
 
     }
 
@@ -73,7 +72,9 @@ exports.PointOfSaleTerminal = class PointOfSaleTerminal {
                         discountCount = discountCount+1
                     }
                 }
-                totalPrice += (productCount-discountCount*volumeForDiscount)*this.#getPricingUnit(product)+discountCount*this.#getPricingVolume(product)
+                let discountedCost = discountCount*this.#getPricingVolume(product)
+                let remainderCost = (productCount-discountCount*volumeForDiscount)*this.#getPricingUnit(product)
+                totalPrice += discountedCost + remainderCost
             } else {
                 totalPrice += productCount * this.#getPricingUnit(product)
             }
