@@ -60,6 +60,26 @@ it('Scan items ABCD. total = 7.25', function () {
     expect(t.calculateTotal()).to.equal(7.25);
 })
 
+it('Scan items AAAAAAA (two discounts applied). total = 8.5', function () {
+    var t = new Terminal.PointOfSaleTerminal;
+    t.setPricingUnit("A", 1.25);
+    t.setPricingUnit("B", 4.25);
+    t.setPricingUnit("C", 1.0);
+    t.setPricingUnit("D", 0.75);
+    t.setPricingVolume("A", 3, 3);
+    t.setPricingVolume("C", 6, 5);
+
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+    t.scanProduct("A");
+
+    expect(t.calculateTotal()).to.equal(8.5);
+})
 
 
 it('Scan item that doesnt exist. should error', function () {
